@@ -1,46 +1,43 @@
 #include <iostream>
-#include <cstring> // For strcpy
 
-class Person {
-    char* name; // Dynamically allocated memory
-    int age;
+using namespace std;
 
-public:
-    // Constructor
-    Person(const char* name, int age) {
-        this->age = age;
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-        std::cout << "Constructor called for " << this->name << std::endl;
-    }
-    
-
-    // Copy constructor
-    Person(const Person& other) {
-        age = other.age;
-        name = new char[strlen(other.name) + 1];
-        strcpy(name, other.name);
-        std::cout << "Copy constructor called for " << name << std::endl;
-    }
-
-    // Destructor
-    ~Person() {
-        std::cout << "Destructor called for " << name << std::endl;
-        delete[] name;
-    }
-
-    // Function to display details
-    void display() const {
-        std::cout << "Name: " << name << ", Age: " << age << std::endl;
-    }
+template<typename T>
+class Array {
+    private:
+        T *ptr;
+        int size;
+    public:
+        Array(T arr[], int s);
+        void print() const;
 };
 
+// Implementação do construtor
+template<typename T>
+Array<T>::Array(T arr[], int s) {
+    size = s;
+    ptr = new T[s];
+    for (int i = 0; i < size; i++) {
+        ptr[i] = arr[i];
+    }
+}
+
+// Implementação da função print
+template<typename T>
+inline void Array<T>::print() const {
+    for (int i = 0; i < size; i++) {
+        cout << " " << ptr[i];
+    }
+    cout << endl;
+}
+
 int main() {
-    Person person1("Alice", 25);    // Constructor is called
-    person1.display();
+    int arr[5] = {1, 2, 3, 4, 5};
 
-    Person person2 = person1;      // Copy constructor is called
-    person2.display();
 
+    Array<int>* a = new Array<int>(arr, 5);
+
+    a->print();
+    
     return 0;
 }
