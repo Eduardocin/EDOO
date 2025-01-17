@@ -1,4 +1,5 @@
 {
+    "version": "2.0.0",
     "configurations": [
         {
             "name": "C/C++: gcc.exe Compilar e depurar o arquivo ativo",
@@ -11,7 +12,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\TDM-GCC-64\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Habilitar a reformatação automática para gdb",
@@ -37,7 +38,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\TDM-GCC-64\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "setupCommands": [
                 {
                     "description": "Habilitar a reformatação automática para gdb",
@@ -56,13 +57,12 @@
             "name": "(Windows) Iniciar",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "insira o nome do programa, por exemplo ${workspaceFolder}/a.exe",
+            "program": "${workspaceFolder}/a.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "console": "externalTerminal"
         }
-    ],
-    "version": "2.0.0"
+    ]
 }
