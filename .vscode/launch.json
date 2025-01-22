@@ -1,6 +1,7 @@
 {
     "version": "2.0.0",
     "configurations": [
+    
         {
             "name": "C/C++: gcc.exe Compilar e depurar o arquivo ativo",
             "type": "cppdbg",
@@ -10,7 +11,7 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
             "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "setupCommands": [
@@ -36,7 +37,7 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "gdb",
             "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
             "setupCommands": [
@@ -52,17 +53,6 @@
                 }
             ],
             "preLaunchTask": "C/C++: g++.exe arquivo de build ativo"
-        },
-        {
-            "name": "(Windows) Iniciar",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/a.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "console": "externalTerminal"
         }
     ]
 }
