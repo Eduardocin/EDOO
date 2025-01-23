@@ -26,22 +26,21 @@ BinaryExpression::~BinaryExpression() {
     delete op;
 }
 
-bool BinaryExpression::evaluateBool() const {
-    if (op->getOp() == "==") {
-        return e1->evaluateBool() == e2->evaluateBool();
+    bool BinaryExpression::evaluateBool() const {
+        throw std::runtime_error("Invalid unary operation");
     }
-    throw std::runtime_error("Operação inválida");
-}
 
-int BinaryExpression::evaluateInt() const {
-    throw std::runtime_error("Operação não suportada para int.");
-}
+    int BinaryExpression::evaluateInt() const {
+        throw std::runtime_error("Invalid unary operation");
+    }
+
 
 // EqExp
 EqExp::EqExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
-bool EqExp::evaluateBool() const {
+bool EqExp::evaluateBool() const  {
+    
     if (op->getOp() == "==" || op->getOp() == "!=") {
         try {
             bool leftBool = e1->evaluateBool();
@@ -61,11 +60,12 @@ bool EqExp::evaluateBool() const {
                     return leftInt != rightInt;
                 }
             } catch (const std::runtime_error&) {
-                throw std::runtime_error("Operação inválida em EqExp");
+                throw std::runtime_error("Invalid operation");
             }
         }
     }
-    throw std::runtime_error("Operação inválida");
+
+    throw std::runtime_error("Invalid operation");
 }
 
 // AndExp
@@ -76,7 +76,7 @@ bool AndExp::evaluateBool() const {
     if (op->getOp() == "&&") {
         return e1->evaluateBool() && e2->evaluateBool();
     }
-    throw std::runtime_error("Operação inválida");
+    throw std::runtime_error("Invalid operation");
 }
 
 // OrExp
@@ -87,7 +87,7 @@ bool OrExp::evaluateBool() const {
     if (op->getOp() == "||") {
         return e1->evaluateBool() || e2->evaluateBool();
     }
-    throw std::runtime_error("Operação inválida");
+    throw std::runtime_error("Invalid operation");
 }
 
 // RelExp
@@ -104,7 +104,7 @@ bool RelExp::evaluateBool() const {
     } else if (op->getOp() == ">=") {
         return e1->evaluateInt() >= e2->evaluateInt();
     }
-    throw std::runtime_error("Operação inválida");
+    throw std::runtime_error("Invalid operation");
 }
 
 // AddExp
@@ -121,9 +121,10 @@ int AddExp::evaluateInt() const {
             return leftValue - rightValue;
         }
     } catch (const std::runtime_error&) {
-        throw std::runtime_error("Operação inválida: operandos incompatíveis");
+        throw std::runtime_error("Incompatible operands");
     }
-    throw std::runtime_error("Operação inválida");
+
+    throw std::runtime_error("Invalid operation");
 }
 
 // MulExp
@@ -136,11 +137,11 @@ int MulExp::evaluateInt() const {
     } else if (op->getOp() == "/") {
         int divisor = e2->evaluateInt();
         if (divisor == 0) {
-            throw std::runtime_error("divisão por zero");
+            throw "Division by zero";
         }
         return e1->evaluateInt() / divisor;
     }
-    throw std::runtime_error("Operação inválida");
+    throw std::runtime_error("Invalid operation");
 }
 
 // UnaryExpression
@@ -153,18 +154,13 @@ UnaryExpression::~UnaryExpression() {
 }
 
 int UnaryExpression::evaluateInt() const {
+    int value = e->evaluateInt();
     if (op->getOp() == "-") {
-        return -e->evaluateInt();
+        return -value;
     }
-    throw std::runtime_error("Operação unária inválida");
+    throw std::runtime_error("Invalid unary operation");
 }
 
-bool UnaryExpression::evaluateBool() const {
-    if (op->getOp() == "!") {
-        return !e->evaluateBool();
-    }
-    throw std::runtime_error("Operação unária inválida");
-}
 
 // ParenthesesExpression
 ParenthesesExpression::ParenthesesExpression(Expression* e)

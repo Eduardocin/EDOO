@@ -11,7 +11,8 @@ private:
     std::string current_token;
 
     std::string tokenizer();
-    void next_token();
+    inline void next_token() {current_token = tokenizer();}
+    void valid_token();
 
     Expression* or_exp();
     Expression* and_exp();
@@ -23,9 +24,11 @@ private:
     Expression* primary_exp();
 
 public:
+
     Parser(const std::string& expression);
-    Expression* parse_expression();
-    std::string curToken() const;
+    bool balancedParentheses();
+    Expression* parse_exp();
+    inline std::string curToken() const {return current_token;}
 };
 
 #endif

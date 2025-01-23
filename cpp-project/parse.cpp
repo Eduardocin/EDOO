@@ -8,10 +8,36 @@ Parser::Parser(const std::string& expression) : stream(expression), current_toke
     next_token();
 }
 
+bool Parser::balancedParentheses(){
+
+    std::istringstream copy(stream.str());
+    int count = 0;
+    char c;
+    while(copy.get(c)){
+        if(c == '('){
+            count++;
+        }
+        else if(c == ')'){
+            count--;
+            if(count < 0){
+                return false;
+            }
+        }
+    }
+
+    if(count == 0){
+        return true;
+    }else{
+        return false;
+    }
+    
+}
+
+
 //Método que tokeniza a expressão
 std::string Parser::tokenizer() {
-
     char c;
+
     while (stream.get(c) && std::isspace(c)) {}
         //para o loop se o arquivo acabar
         if (stream.eof()) {
@@ -50,14 +76,28 @@ std::string Parser::tokenizer() {
         return op;
 }
 
+inline void Parser::valid_token(){
 
-void Parser::next_token() {
-    current_token = tokenizer();
+    if(!current_token.empty() &&
+        current_token != ")" &&
+        current_token != "&&" &&
+        current_token != "||" &&
+        current_token != "==" &&
+        current_token != "!=" &&
+        current_token != "<" &&
+        current_token != ">" &&
+        current_token != "<=" &&
+        current_token != ">=" &&
+        current_token != "+" &&
+        current_token != "-" &&
+        current_token != "*" &&
+        current_token != "/")
+        {
+        throw std::runtime_error("Invalid token");
+        }
 }
 
-std::string Parser::curToken() const {
-    return current_token;
-}
+
 
 //Inicializa o parser
 Expression* Parser::parse_exp() {
@@ -66,7 +106,7 @@ Expression* Parser::parse_exp() {
 
 Expression* Parser::or_exp() {
     Expression* e1 = and_exp();
-    while (current_token == "||") {
+    if (current_token == "||") {
         Operator* op = new Operator(current_token);
         next_token();
         Expression* e2 = and_exp();
@@ -121,6 +161,7 @@ Expression* Parser::add_exp() {
 }
 
 Expression* Parser::mul_exp() {
+    
     Expression* e1 = unary_exp();
     while (current_token == "*" || current_token == "/") {
         Operator* op = new Operator(current_token);
@@ -132,11 +173,8 @@ Expression* Parser::mul_exp() {
 }
 
 Expression* Parser::unary_exp() {
+    
     if (current_token == "-") {
-        Operator* op = new Operator(current_token);
-        next_token();
-        return new UnaryExpression(unary_exp(), op);
-    } else if (current_token == "!") {
         Operator* op = new Operator(current_token);
         next_token();
         return new UnaryExpression(unary_exp(), op);
@@ -144,22 +182,29 @@ Expression* Parser::unary_exp() {
     return primary_exp();
 }
 
+
 Expression* Parser::primary_exp() {
+    
     if (current_token == "(") {
         next_token();
         Expression* e = parse_exp();
         if (current_token == ")") {
             next_token();
         }
-        return e;
+        return new ParenthesesExpression(e); // Retorna expressão entre parênteses
     }
+
     std::string token = current_token;
     next_token();
     if (token == "true") {
+        valid_token();
         return new Literal<bool>(true);
     } else if (token == "false") {
+        valid_token();
         return new Literal<bool>(false);
     } else {
-        return new Literal<int>(std::stoi(token));
+        valid_token();
+        int value = std::stoi(token);
+        return new Literal<int>(value);
     }
 }

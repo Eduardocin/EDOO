@@ -16,19 +16,26 @@ int main() {
             getline(cin, expression);
 
             try {
-                Parser parser(expression);
-                Expression* exp = parser.parse_expression();
 
-                try {
-                    int intResult = exp->evaluateInt();
-                    cout << intResult << endl;
-                } 
-                catch (const runtime_error&) {
-                    bool boolResult = exp->evaluateBool();
-                    cout << boolalpha << boolResult << endl;
+                Parser parser(expression);
+                if(!parser.balancedParentheses()) {
+                    throw std::runtime_error("error");
                 }
-                delete exp;
-            } 
+
+                Expression* exp = parser.parse_exp();
+                    try {
+                        int intResult = exp->evaluateInt();
+                        cout << intResult << endl;
+                    } 
+                    catch (const runtime_error&) {
+                        bool boolResult = exp->evaluateBool();
+                        cout << boolalpha << boolResult << endl;
+                    }
+                    delete exp;
+                }
+            catch(const char* e) {
+                cout << "error" << endl;
+            }
             catch (...) {
                 cout << "error" << endl;
             }

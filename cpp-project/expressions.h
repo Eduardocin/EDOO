@@ -113,7 +113,6 @@ public:
     UnaryExpression(Expression* e, Operator* op);
     ~UnaryExpression() override;
     int evaluateInt() const override;
-    bool evaluateBool() const override;
 };
 
 class ParenthesesExpression : public Expression {
@@ -122,8 +121,10 @@ protected:
 public:
     ParenthesesExpression(Expression* e);
     ~ParenthesesExpression() override;
+    
     int evaluateInt() const override;
     bool evaluateBool() const override;
-};
+
+};;
 
 #endif
