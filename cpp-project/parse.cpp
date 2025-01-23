@@ -3,41 +3,53 @@
 #include <stdexcept>
 #include <iostream>
 
+//Construtor da classe Parser
 Parser::Parser(const std::string& expression) : stream(expression), current_token("") {
     next_token();
 }
 
+//Método que tokeniza a expressão
 std::string Parser::tokenizer() {
+
     char c;
     while (stream.get(c) && std::isspace(c)) {}
-    if (stream.eof()) {
-        return "";
-    }
-    if (std::isdigit(c) || std::isalpha(c)) {
-        std::string token(1, c);
-        while (stream.peek() != EOF && std::isalnum(stream.peek())) {
-            token += static_cast<char>(stream.get());
+        //para o loop se o arquivo acabar
+        if (stream.eof()) {
+            return "";
         }
-        return token;
-    }
-    if (c == '(' || c == ')') {
-        return std::string(1, c);
-    }
-    std::string op(1, c);
-    if (stream.peek() != EOF) {
-        char next = static_cast<char>(stream.peek());
-        if ((op == "=" && next == '=') ||
-            (op == "|" && next == '|') ||
-            (op == "&" && next == '&') ||
-            (op == "!" && next == '=') ||
-            (op == "<" && next == '=') ||
-            (op == ">" && next == '=')) {
-            stream.get();
-            return op + next;
+
+        //create token for digits and characters
+        if (std::isdigit(c) || std::isalpha(c)) {
+            
+            std::string token(1, c);
+            while (stream.peek() != EOF && std::isalnum(stream.peek())) {
+                token += static_cast<char>(stream.get());
+            }
+            return token; 
+
         }
-    }
-    return op;
+
+        //create token for parentheses and operators
+        if (c == '(' || c == ')') {
+            return std::string(1, c);
+        }
+
+        std::string op(1, c);
+        if (stream.peek() != EOF) {
+            char next = static_cast<char>(stream.peek());
+            if ((op == "=" && next == '=') ||
+                (op == "|" && next == '|') ||
+                (op == "&" && next == '&') ||
+                (op == "!" && next == '=') ||
+                (op == "<" && next == '=') ||
+                (op == ">" && next == '=')) {
+                stream.get();
+                return op + next;
+            }
+        }
+        return op;
 }
+
 
 void Parser::next_token() {
     current_token = tokenizer();
@@ -47,7 +59,8 @@ std::string Parser::curToken() const {
     return current_token;
 }
 
-Expression* Parser::parse_expression() {
+//Inicializa o parser
+Expression* Parser::parse_exp() {
     return or_exp();
 }
 
@@ -87,7 +100,7 @@ Expression* Parser::eq_exp() {
 Expression* Parser::rel_exp() {
     Expression* e1 = add_exp();
     while (current_token == "<" || current_token == ">" ||
-           current_token == "<=" || current_token == ">=") {
+        current_token == "<=" || current_token == ">=") {
         Operator* op = new Operator(current_token);
         next_token();
         Expression* e2 = add_exp();
@@ -134,7 +147,7 @@ Expression* Parser::unary_exp() {
 Expression* Parser::primary_exp() {
     if (current_token == "(") {
         next_token();
-        Expression* e = parse_expression();
+        Expression* e = parse_exp();
         if (current_token == ")") {
             next_token();
         }

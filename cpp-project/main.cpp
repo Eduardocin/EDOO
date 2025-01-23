@@ -9,25 +9,29 @@ int main() {
     cin >> num_inputs;
     cin.ignore();
 
-    while (num_inputs--) {
-        string expression;
-        getline(cin, expression);
-
-        try {
-            Parser parser(expression);
-            Expression* exp = parser.parse_expression();
+    if(num_inputs > 0)
+    {
+        while (num_inputs--) {
+            string expression;
+            getline(cin, expression);
 
             try {
-                int intResult = exp->evaluateInt();
-                cout << intResult << endl;
-            } catch (const std::runtime_error&) {
-                bool boolResult = exp->evaluateBool();
-                cout << boolalpha << boolResult << endl;
-            }
+                Parser parser(expression);
+                Expression* exp = parser.parse_expression();
 
-            delete exp;
-        } catch (const std::exception& e) {
-            cerr << "error" << endl;
+                try {
+                    int intResult = exp->evaluateInt();
+                    cout << intResult << endl;
+                } 
+                catch (const runtime_error&) {
+                    bool boolResult = exp->evaluateBool();
+                    cout << boolalpha << boolResult << endl;
+                }
+                delete exp;
+            } 
+            catch (...) {
+                cout << "error" << endl;
+            }
         }
     }
     return 0;

@@ -60,8 +60,8 @@ public:
 class BinaryExpression : public Expression {
 protected:
     Expression* e1;
-    Expression* e2;
     Operator* op;
+    Expression* e2;
 public:
     BinaryExpression(Expression* e1, Operator* op, Expression* e2);
     virtual ~BinaryExpression();
