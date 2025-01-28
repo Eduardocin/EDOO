@@ -5,18 +5,31 @@ std::string Operator::getOp() const {
     return op;
 }
 
-// Especialização para Literal<int>
+// Literal<int> implementation
 Literal<int>::Literal(int value) : value(value) {}
+    
+int Literal<int>::operator+(const Literal<int>& literal) const {
+    return value + literal.value;
+}
+int Literal<int>::operator-(const Literal<int>& literal) const {
+    return value - literal.value;
+}
+
 int Literal<int>::evaluateInt() const {
     return value;
 }
+int Literal<int>::getValue() const {
+    return value;
+}
 
-// Especialização para Literal<bool>
+// Literal<bool> implementation
 Literal<bool>::Literal(bool value) : value(value) {}
+
 bool Literal<bool>::evaluateBool() const {
     return value;
 }
 
+// BinaryExpression implementation
 BinaryExpression::BinaryExpression(Expression* e1, Operator* op, Expression* e2)
     : e1(e1), op(op), e2(e2) {}
 
@@ -35,7 +48,7 @@ BinaryExpression::~BinaryExpression() {
     }
 
 
-// EqExp
+
 EqExp::EqExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
@@ -51,7 +64,7 @@ bool EqExp::evaluateBool() const  {
                 return leftBool != rightBool;
             }
         } catch (const std::runtime_error&) {
-            try {
+            try { 
                 int leftInt = e1->evaluateInt();
                 int rightInt = e2->evaluateInt();
                 if (op->getOp() == "==") {
@@ -68,7 +81,6 @@ bool EqExp::evaluateBool() const  {
     throw std::runtime_error("Invalid operation");
 }
 
-// AndExp
 AndExp::AndExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
@@ -79,7 +91,6 @@ bool AndExp::evaluateBool() const {
     throw std::runtime_error("Invalid operation");
 }
 
-// OrExp
 OrExp::OrExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
@@ -90,7 +101,6 @@ bool OrExp::evaluateBool() const {
     throw std::runtime_error("Invalid operation");
 }
 
-// RelExp
 RelExp::RelExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
@@ -107,18 +117,19 @@ bool RelExp::evaluateBool() const {
     throw std::runtime_error("Invalid operation");
 }
 
-// AddExp
 AddExp::AddExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
+
+
 int AddExp::evaluateInt() const {
     try {
-        int leftValue = e1->evaluateInt();
-        int rightValue = e2->evaluateInt();
+        int Value = e1->evaluateInt();
+        int Value2 = e2->evaluateInt();
         if (op->getOp() == "+") {
-            return leftValue + rightValue;
+            return Value + Value2;
         } else if (op->getOp() == "-") {
-            return leftValue - rightValue;
+            return Value - Value2;
         }
     } catch (const std::runtime_error&) {
         throw std::runtime_error("Incompatible operands");
@@ -127,7 +138,6 @@ int AddExp::evaluateInt() const {
     throw std::runtime_error("Invalid operation");
 }
 
-// MulExp
 MulExp::MulExp(Expression* e1, Operator* op, Expression* e2)
     : BinaryExpression(e1, op, e2) {}
 
@@ -144,7 +154,6 @@ int MulExp::evaluateInt() const {
     throw std::runtime_error("Invalid operation");
 }
 
-// UnaryExpression
 UnaryExpression::UnaryExpression(Expression* e, Operator* op)
     : e(e), op(op) {}
 
@@ -162,7 +171,6 @@ int UnaryExpression::evaluateInt() const {
 }
 
 
-// ParenthesesExpression
 ParenthesesExpression::ParenthesesExpression(Expression* e)
     : e(e) {}
 

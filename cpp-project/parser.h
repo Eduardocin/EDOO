@@ -26,9 +26,10 @@ private:
 public:
 
     Parser(const std::string& expression);
-    bool balancedParentheses();
+    ~Parser() = default;
+    static bool balancedParentheses(const std::string& expr);
     Expression* parse_exp();
-    inline std::string curToken() const {return current_token;}
+    std::string curToken() const;
 };
 
 #endif

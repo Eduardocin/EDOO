@@ -8,10 +8,10 @@ class Expression {
 public:
     virtual ~Expression() {}
     virtual int evaluateInt() const {
-        throw std::runtime_error("Operação não suportada para int");
+        throw std::runtime_error("invalid operation");
     }
     virtual bool evaluateBool() const {
-        throw std::runtime_error("Operação não suportada para bool");
+        throw std::runtime_error("invalid operation");
     }
 };
 
@@ -28,26 +28,28 @@ class Literal : public Expression {
 public:
     Literal(T value) : value(value) {}
     int evaluateInt() const override {
-        throw std::runtime_error("Operação não suportada para int");
+        throw std::runtime_error("invalid operation");
     }
     bool evaluateBool() const override {
-        throw std::runtime_error("Operação não suportada para bool");
+        throw std::runtime_error("invalid operation");
     }
-protected:
+    
+private:
     T value;
 };
 
-// Especialização para Literal<int>
 template<>
 class Literal<int> : public Expression {
-private:
+protected:
     int value;
 public:
     Literal(int value);
+    int operator+(const Literal<int>& literal) const;
+    int operator-(const Literal<int>& literal) const;
     int evaluateInt() const override;
+    int getValue() const;
 };
 
-// Especialização para Literal<bool>
 template<>
 class Literal<bool> : public Expression {
 private:

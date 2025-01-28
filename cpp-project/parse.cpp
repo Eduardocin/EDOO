@@ -1,16 +1,17 @@
 #include "parser.h"
-#include <cctype>
 #include <stdexcept>
 #include <iostream>
 
-//Construtor da classe Parser
 Parser::Parser(const std::string& expression) : stream(expression), current_token("") {
     next_token();
 }
 
-bool Parser::balancedParentheses(){
+inline std::string Parser::curToken() const {
+    return current_token;
+}
 
-    std::istringstream copy(stream.str());
+bool Parser::balancedParentheses(const std::string& expr){
+    std::istringstream copy(expr);
     int count = 0;
     char c;
     while(copy.get(c)){
@@ -34,17 +35,17 @@ bool Parser::balancedParentheses(){
 }
 
 
-//Método que tokeniza a expressão
+//Separa os tokens
 std::string Parser::tokenizer() {
     char c;
 
     while (stream.get(c) && std::isspace(c)) {}
+        
         //para o loop se o arquivo acabar
         if (stream.eof()) {
             return "";
         }
 
-        //create token for digits and characters
         if (std::isdigit(c) || std::isalpha(c)) {
             
             std::string token(1, c);
@@ -100,7 +101,7 @@ inline void Parser::valid_token(){
 
 
 //Inicializa o parser
-Expression* Parser::parse_exp() {
+inline Expression* Parser::parse_exp() {
     return or_exp();
 }
 
@@ -172,8 +173,7 @@ Expression* Parser::mul_exp() {
     return e1;
 }
 
-Expression* Parser::unary_exp() {
-    
+inline Expression* Parser::unary_exp() {
     if (current_token == "-") {
         Operator* op = new Operator(current_token);
         next_token();
@@ -184,14 +184,13 @@ Expression* Parser::unary_exp() {
 
 
 Expression* Parser::primary_exp() {
-    
     if (current_token == "(") {
         next_token();
         Expression* e = parse_exp();
         if (current_token == ")") {
             next_token();
         }
-        return new ParenthesesExpression(e); // Retorna expressão entre parênteses
+        return new ParenthesesExpression(e); 
     }
 
     std::string token = current_token;
