@@ -124,7 +124,7 @@ int main(){
     cin >> c;
     cin.ignore(); // ignore the newline character
     
-    while(n--){
+    while(c--){
         cin >> n;
         List list(n);
 
