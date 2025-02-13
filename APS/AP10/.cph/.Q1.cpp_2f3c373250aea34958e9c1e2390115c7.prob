@@ -1,0 +1,1 @@
+{"name":"Local: Q1","url":"d:\\Users\\ehss\\EDOO\\EDOO\\APS\\AP10\\Q1.cpp","tests":[{"id":1739457567440,"input":"1 \npush 10 \npush 20 \npush 5 \npop 2 \npush 1 \npush 16 \npush 12 \npush 15 \npop 5 \nend ","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\Users\\ehss\\EDOO\\EDOO\\APS\\AP10\\Q1.cpp","group":"local","local":true}
