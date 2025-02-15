@@ -5,24 +5,34 @@ using namespace std;
 
 
 class Node{
-    friend class Stack;
     private:
         int data;
         Node* next;
     
     public:
-    Node(): data(0), next(nullptr) {}
+        Node(int data, Node* next): data(data), next(next) {}
+        
+        // Getters
+        int getData() const {
+            return data;
+        }
 
-    Node(int data, Node* next){
+        Node* getNext() const {
+            return next;
+        }
+
+        // Setters
+        void setData(const int data){
             this->data = data;
+        }
+        
+        void setNext(Node* next){
             this->next = next;
         }
-    
 };
 
 
-
-class Stack : public Node {
+class Stack {
     private:
         Node* top;
         int size;
@@ -38,33 +48,43 @@ class Stack : public Node {
             while(top != nullptr)
             {
                 Node* temp = top;
-                top = top->next;
+                top = top->getNext();
                 delete temp;
             }
         }
 
-        void push(int data)
+        void push(const int data)
         {
             top = new Node(data, top);
             size++;
         }
 
-        int pop()
+        int pop(int count)
         {
             if(top == nullptr)
             {
                 return -1;
             }
 
-            int temp = top->data;
-            top = top->next;
-            size--;
-            return temp;
+            int sum = 0;
+            while(count --)
+            {
+                sum += top->getData();
+                Node* toDelete = top;
+                top = top->getNext();
+                size--;
+    
+                delete toDelete;
+            }
+
+            return sum;
+        }
+
+        int getSize() const
+        {
+            return size;
         }
 };
-
-
-
 
 
 int main() {
@@ -86,7 +106,9 @@ int main() {
                 s.push(value);
             }
             else if(op == "pop"){
-                cout << s.pop() << endl;
+                int count;
+                cin >> count;
+                cout << s.pop(count) << endl;
             }
         }
     }
