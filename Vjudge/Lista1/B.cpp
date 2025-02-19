@@ -5,6 +5,7 @@
 using namespace std;
 
 class Node {
+
 private:
     char data;
     Node* next;
