@@ -19,10 +19,7 @@ public:
     Node* getNext() const {
         return next;
     }
-    
-    void setNext(Node* next) {
-        this->next = next;
-    }
+
 };
 
 class Stack {
