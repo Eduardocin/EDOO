@@ -62,7 +62,7 @@ class HashTable{
             2. Calculate the initial position using the hash function
             3. If the position is occupied (not NULL and not a deleted marker):
             4. Use linear prob to find a new position
-            5. Keep trying different offsets from the permutation array until finding an empty or deleted slot
+            5. Keep trying different offsets from linear prob until finding an empty or deleted slot
             6. Insert the entry at the found position
             7. Increment the counter
             */
