@@ -34,7 +34,6 @@ bool Parser::balancedParentheses(const std::string& expr){
     
 }
 
-
 //Separa os tokens
 std::string Parser::tokenizer() {
     char c;
@@ -61,6 +60,7 @@ std::string Parser::tokenizer() {
             return std::string(1, c);
         }
 
+        //to handle sequential operators
         std::string op(1, c);
         if (stream.peek() != EOF) {
             char next = static_cast<char>(stream.peek());

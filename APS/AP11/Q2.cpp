@@ -28,8 +28,8 @@ class HashTable{
         int size;
         int count;
         vector<HashNode> table;
-        vector<int> perm;
         vector<bool> removed;
+
         int hashFunction(string key) const{
             int sum = 0;
             int s = key.size();
@@ -43,17 +43,12 @@ class HashTable{
     public:
         HashTable(int size):size(size), count(0){
             table.assign(size, HashNode());
-            perm.resize(size-1);
             removed.assign(size, false);
-
-                // Initialize permutation array with values 1,2,3,...
-            for(int i = 0; i < size-1; i++) {
-                    perm[i] = i + 1;
-            }
         }
         
         int linear_prob(int h, int i) const {
-            return (h + perm[i - 1]) % size;
+            int newPos = (h + i) % size;
+            return newPos;
         }
 
         bool isEmpty(int pos) const {
@@ -66,7 +61,7 @@ class HashTable{
             1. First, check if the table has enough space and the key doesn't already exist
             2. Calculate the initial position using the hash function
             3. If the position is occupied (not NULL and not a deleted marker):
-            4. Use the permutation array (Perm) to find a new position
+            4. Use linear prob to find a new position
             5. Keep trying different offsets from the permutation array until finding an empty or deleted slot
             6. Insert the entry at the found position
             7. Increment the counter
@@ -81,8 +76,7 @@ class HashTable{
                         int newPos;
                         do {
                             i++;
-                            int offset = perm[i-1];
-                            newPos = (pos + offset) % size;
+                            newPos = linear_prob(pos, i);  // Usa a sondagem linear
                         } while (!table[newPos].getEmpty() && !removed[newPos]);
                         
                         pos = newPos;
