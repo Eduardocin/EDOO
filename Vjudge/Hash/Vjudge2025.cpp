@@ -4,31 +4,17 @@
 
 using namespace std;
 
-/*
-Estados para verificar
-
-Removed (R): Indica que um elemento foi removido da tabela.
-Empty (E): Indica que uma posição da tabela está vazia.
-(Obs: Um elemento pode ser inserido em uma posição que estava vazia ou que estava marcada como removida.)
-(Obs: A busca por um elemento deve parar quando encontrar uma posição (vazia e nao removida) ou uma posição com o elemento buscado.)
-
-*/
-
 class HashNode {
     private:
         string key;
-        string value;
         bool empty;
     public:
         HashNode(): empty(true) {}
-        HashNode(string key, string value): key(key), value(value), empty(false) {}
+        HashNode(string key): key(key), empty(false) {}
 
-        // Getters  
         string getKey() const {return key;}
-        string getValue() const {return value;}
         bool getEmpty() const {return empty; }
 
-        //Setters
         void setEmpty(bool val) {empty = val;}
 
 };
@@ -42,12 +28,12 @@ class HashTable{
 
         int hashFunction(string key) const {
             int sum = 0;
-            int s = key.size();
-            for(int i = 0; i < s; i++)
+            for(int i = 0; i < key.length(); i++)
             {
-                sum += key[i];
+                sum += int(key[i])* (i+1);
             }
-            return sum % size;
+
+            return (19*sum) % 101;
         }
     
     
@@ -59,8 +45,10 @@ class HashTable{
             removed.assign(size, false);
         }
 
-        int linear_prob(int hashIndex, int probIndex) const {
-            int newPos = (hashIndex + probIndex) % size;
+        int getSize() const {return count;}
+
+        int quadratic_prob(int hashIndex, int probIndex) const {
+            int newPos = (hashIndex + (probIndex*probIndex) + 23*probIndex) % 101;
             return newPos;
         }
 
@@ -73,15 +61,16 @@ class HashTable{
             }
             else
             {
-                for(int i = 1; i < size; i++)
+                for(int i = 1; i < 20; i++)
                 {
-                    int newPos = linear_prob(pos,i);
+                    int newPos = quadratic_prob(pos,i);
 
                     if(table[newPos].getKey() == key && !table[newPos].getEmpty())
                     {
                         return newPos;
                     }
-                    else if(table[newPos].getEmpty() && !removed[newPos])
+
+                    if(table[newPos].getEmpty() && !removed[newPos])
                     {
                         return -1;
                     }
@@ -90,26 +79,27 @@ class HashTable{
             return -1;
         }
 
-
-
-        void insert(string key, string value){
-            //check if the table has enough space and the key doesn't already exist
+        void insert(string key){
             if(count < size && find(key) == -1)
             {
                 int pos = hashFunction(key);
                 if(!table[pos].getEmpty() && !removed[pos])
                 {
-                    for(int i = 1; i < size; i++){
-                        int newPos = linear_prob(pos, i);
+                    for(int i = 1; i < 20; i++){
+                        int newPos = quadratic_prob(pos, i);
                         if(table[newPos].getEmpty() || removed[newPos]){
                             pos = newPos;
                             break;
                         }
                     }
                 }
-                table[pos] = HashNode(key, value);
-                removed[pos] = false;
-                count++;
+                
+                if (table[pos].getEmpty() || removed[pos])
+                {
+                    table[pos] = HashNode(key);
+                    removed[pos] = false;
+                    count++;
+                }
             }
         }
 
@@ -120,40 +110,48 @@ class HashTable{
                 removed[pos] = true;
                 count--;
             }
+            return;
+        }
+
+        void print(){
+            for(int i = 0; i < size; i++){
+                if(!table[i].getEmpty())
+                {
+                    cout << i << ":" << table[i].getKey() << endl;
+                }
+            }
         }
 };
 
-
 int main(){
-    int numOp;
-    string command, key;
-
-    cin >> numOp;
-    
-    HashTable table(numOp);
-
-    for(int i = 0; i < numOp; i++){
-        cin >> command;
+    int numCases, numOp;
+    cin >> numCases;
+    while(numCases--)
+    {
+        string op, key;
+        HashTable* table = new HashTable(101);
+        cin >> numOp;
+        cin.ignore();
         
-        if(command == "fim"){
-            break;
+        while(numOp--)
+        {   
+            getline(cin, op, ':');
+            getline(cin, key);
+            
+            if(op == "ADD")
+            {
+                table->insert(key);
+            }
+            else
+            {
+                table->remove(key);
+            }
+
         }
-        else if(command == "add"){
-            cin >> key;
-            table.insert(key, key);
-        }
-        else if(command == "sch"){
-            cin >> key;
-            int pos = table.find(key);
-            cout << key << " " << pos << endl;
-        }
-        else if(command == "rmv"){
-            cin >> key;
-            table.remove(key);
-        }
+        cout << table->getSize() << endl;
+        table->print();
+        delete table;
     }
 
-
     return 0;
-
 }

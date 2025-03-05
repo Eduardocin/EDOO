@@ -42,6 +42,7 @@ class HashTable{
 
     public:
         HashTable(int size):size(size), count(0){
+            //assign(size_type count, const T& value)
             table.assign(size, HashNode());
             removed.assign(size, false);
         }
@@ -67,7 +68,7 @@ class HashTable{
             7. Increment the counter
             */
             if (count < size) {
-                int searchPos = search(key);
+                int searchPos = find(key);
                 if (searchPos == -1) {  
                     int pos = hashFunction(key);
                     
@@ -90,7 +91,7 @@ class HashTable{
         }
 
         void remove(string key){
-            int pos = search(key);
+            int pos = find(key);
             if(pos != -1){
                 table[pos] = HashNode();
                 removed[pos] = true;
@@ -100,7 +101,7 @@ class HashTable{
 
 
 
-        int search(string key) const {
+        int find(string key) const {
         /*
         1. Calculate the initial position using the hash function
         2. If the initial position is the key we're looking for, return it
@@ -160,7 +161,7 @@ int main(){
         }
         else if(command == "sch"){
             cin >> key;
-            int pos = table.search(key);
+            int pos = table.find(key);
             cout << key << " " << pos << endl;
         }
         else if(command == "rmv"){
