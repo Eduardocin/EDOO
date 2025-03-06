@@ -77,7 +77,7 @@ class HashTable{
                         int newPos;
                         do {
                             i++;
-                            newPos = linear_prob(pos, i);  // Usa a sondagem linear
+                            newPos = linear_prob(pos, i); 
                         } while (!table[newPos].getEmpty() && !removed[newPos]);
                         
                         pos = newPos;
@@ -128,7 +128,6 @@ class HashTable{
                         return newPos;
                     }
                     
-                    // Only stop if we find a truly empty slot (never used)
                     if(table[newPos].getEmpty() && !removed[newPos]){
                         break;
                     }
