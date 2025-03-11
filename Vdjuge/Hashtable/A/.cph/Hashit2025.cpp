@@ -54,7 +54,6 @@ class HashTable{
 
         int find(string key) const {
             int pos = hashFunction(key);
-
             if(table[pos].getKey() == key && !table[pos].getEmpty())
             {
                 return pos;
@@ -64,12 +63,11 @@ class HashTable{
                 for(int i = 1; i < 20; i++)
                 {
                     int newPos = quadratic_prob(pos,i);
-
                     if(table[newPos].getKey() == key && !table[newPos].getEmpty())
                     {
                         return newPos;
                     }
-
+                    
                     if(table[newPos].getEmpty() && !removed[newPos])
                     {
                         return -1;

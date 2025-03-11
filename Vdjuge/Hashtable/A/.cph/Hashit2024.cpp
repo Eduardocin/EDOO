@@ -54,7 +54,7 @@ public:
                 }
             }
         }
-        return -1; //if key is not found or a empty position is found
+        return -1;
     }
 
     void insert(const K& key){

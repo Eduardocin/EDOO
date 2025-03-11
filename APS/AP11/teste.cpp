@@ -23,14 +23,11 @@ class HashNode {
         HashNode(): empty(true) {}
         HashNode(string key, string value): key(key), value(value), empty(false) {}
 
-        // Getters  
         string getKey() const {return key;}
         string getValue() const {return value;}
         bool getEmpty() const {return empty; }
 
-        //Setters
         void setEmpty(bool val) {empty = val;}
-
 };
 
 class HashTable{
@@ -49,7 +46,6 @@ class HashTable{
             }
             return sum % size;
         }
-    
     
     public:
         HashTable(int size){
