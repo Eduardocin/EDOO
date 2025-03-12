@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
-#include <string>
 
 using namespace std;
 
@@ -71,6 +70,15 @@ class HashTable{
         }
 
         int find(int key) const {
+            /*
+            * 1. Calculate the initial position using the hash function
+            * 2. Check if the key is at the initial position
+            * 3. If not, and the position is not empty or was removed:
+            *    a. Use the probing sequence to check alternative positions
+            *    b. If the key is found, return its position
+            *    c. Continue until finding an empty position or reaching the attempt limit
+            * 4. If not found, return -1
+            */
             size_t pos = hashFunction(key);
             
             if (table[pos].getKey() == key && table[pos].isOccupied()){
@@ -93,26 +101,39 @@ class HashTable{
 
 
         void insert(int key, int value) {
-            if (elementCount < tableSize){
+            /*
+            * Inserts a key-value pair into the hash table
+            * 1. Check if there is available space in the table
+            * 2. Check if the key already exists
+            * 3. If it doesn't exist:
+            *    a. Calculate the position using the hash function
+            *    b. If the position is occupied, use probing to find a free position
+            *    c. Insert the element in the position found
+            *    d. Increment the element counter
+            */
+            if (elementCount < tableSize)
+            {
+            size_t searchPos = find(key);
+            
+            if (searchPos == -1)
+            {
+                int pos = hashFunction(key);
 
-                size_t searchPos = find(key);
-                if (searchPos == -1){
-                    int pos = hashFunction(key);
-
-                    if (!table[pos].isEmpty() && !table[pos].isRemoved()){
-                        size_t probIndex = 0;
-                        size_t newPos;
-                        do{
-                            probIndex++;
-                            newPos = getProbePosition(pos, probIndex);
-                        } while (!table[newPos].isEmpty() && !table[newPos].isRemoved() && probIndex < MAX_PROBE_ATTEMPTS);
-                        pos = newPos;
-                    }
-                    
-                    table[pos] = HashNode(key, value);
-                    elementCount++;
-                    return;
+                if (!table[pos].isEmpty() && !table[pos].isRemoved()){
+                    size_t probIndex = 0;
+                    size_t newPos;
+                    do{
+                        probIndex++;
+                        newPos = getProbePosition(pos, probIndex);
+                    } while (!table[newPos].isEmpty() && !table[newPos].isRemoved() && probIndex < MAX_PROBE_ATTEMPTS);
+                    pos = newPos;
                 }
+                
+                table[pos] = HashNode(key, value);
+                elementCount++;
+                return;
+            }
+            
             }
             return;
         }
@@ -135,44 +156,3 @@ class HashTable{
         }
 
 };
-
-
-int main() {
-    int size;
-    
-    while (cin >> size && size != 0) {
-        int key, value, numOp;
-        string op;
-        cin.ignore();
-
-        HashTable ht(size);
-        
-        // Configura a sequência de sondagem
-        for (int i = 0; i < size-1; i++) {
-            cin >> value;
-            ht.setProbeValue(i+1, value);
-        }
-
-        // Processa operações
-        cin >> numOp;
-        while (numOp--) {
-            cin >> op;
-            
-            if (op == "add") {
-                cin >> key >> value;
-                ht.insert(key, value);
-            }
-            else if (op == "find") {
-                cin >> key;
-                int pos = ht.find(key);
-                
-                if (pos == -1) {
-                    cout << pos << endl;
-                } else {
-                    cout << pos << " " << ht[pos].getValue() << endl;
-                }
-            }
-        }
-    }
-    return 0;
-}
