@@ -6,39 +6,33 @@
 using namespace std;
 
 
-enum class CellState {
-    EMPTY,
-    OCCUPIED,
-    REMOVED
-};
-
 class HashNode{
+    public:
+        enum State {EMPTY, OCCUPIED, REMOVED};
     private:
         int key;
         int value;
-        CellState state;
+        State state;
     public:
-        HashNode(): state(CellState::EMPTY) {}
-        HashNode(int k, int v) : key(k), value(v), state(CellState::OCCUPIED) {}
+        HashNode(): state(EMPTY) {}
+        HashNode(int k, int v) : key(k), value(v), state(OCCUPIED) {}
 
         int getKey() const  { return key; }
         int getValue() const { return value; }
-        CellState getState() const {return state;}
-
-        void setState(CellState state) { this->state = state; }
-
-
+        
         bool isEmpty() const {
-            return state == CellState::EMPTY;
+            return state == EMPTY;
         }
 
         bool isRemoved() const {
-            return state == CellState::REMOVED;
+            return state == REMOVED;
         }
 
         bool isOccupied() const {
-            return state == CellState::OCCUPIED;
+            return state == OCCUPIED;
         }
+
+        void markAsRemoved() {state=REMOVED;}
 };
 
 class HashTable{
@@ -121,7 +115,7 @@ class HashTable{
         void remove(int key) {
             int pos = find(key);
             if (pos != -1) {
-                table[pos].setState(CellState::REMOVED);
+                table[pos].markAsRemoved();
                 elementCount--;
                 return;
             }
@@ -147,13 +141,11 @@ int main() {
 
         HashTable ht(size);
         
-        // Configura a sequência de sondagem
         for (int i = 0; i < size-1; i++) {
             cin >> value;
             ht.setProbeValue(i+1, value);
         }
 
-        // Processa operações
         cin >> numOp;
         while (numOp--) {
             cin >> op;
