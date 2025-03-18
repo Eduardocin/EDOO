@@ -3,16 +3,16 @@
 
 using namespace std;
 
-class Node{
+class BSTNode{
     private:
         int data;
-        Node* left;
-        Node* right;
+        BSTNode* left;
+        BSTNode* right;
 
     public:
-        explicit Node(int data): data(data), left(nullptr), right(nullptr){}
+        explicit BSTNode(int data): data(data), left(nullptr), right(nullptr){}
 
-        ~Node(){
+        ~BSTNode(){
             delete left;
             delete right;
         }
@@ -21,27 +21,27 @@ class Node{
             return data;
         }
     
-        Node* getLeftChild() const {
+        BSTNode* getLeftChild() const {
             return left;
         }
     
-        Node* getRightChild() const {
+        BSTNode* getRightChild() const {
             return right;
         }
     
-        void setLeftChild(Node* left) {
+        void setLeftChild(BSTNode* left) {
             this->left = left;
         }
     
-        void setRightChild(Node* right) {
+        void setRightChild(BSTNode* right) {
             this->right = right;
         }
 };
 
 class BST{
     private:
-        Node* root;
-        int size;
+        BSTNode* root;
+        int numNodes;
 
         /**
          * Algorithm:
@@ -55,16 +55,17 @@ class BST{
          * - Handles duplicates by placing them in the right subtree
          * - Creates new nodes at leaf positions
          */
-        Node* insertHelp(Node* root, const int& data){
+        BSTNode* insertHelp(BSTNode* root, const int& data){
             if(root == nullptr)
             {
-                return new Node(data);
+                return new BSTNode(data);
             }
 
-            if(data < root->getData())
+            if(root->getData() > data)
             {
                 root->setLeftChild(insertHelp(root->getLeftChild(), data));
-            }else
+            }
+            else
             {
                 root->setRightChild(insertHelp(root->getRightChild(), data));
             }
@@ -84,7 +85,7 @@ class BST{
         * - Useful for getting elements in sorted order
         * 
         */
-        void traverseInOrder(Node* root) const {
+        void traverseInOrder(BSTNode* root) const {
             if(root == nullptr)
             {
                 return;
@@ -109,7 +110,7 @@ class BST{
         * - In post-order traversal, the root is always the last node visited
         * 
         */
-        void traversePostOrder(Node* root) const {
+        void traversePostOrder(BSTNode* root) const {
             if(root == nullptr)
             {
                 return;
@@ -119,7 +120,7 @@ class BST{
             traversePostOrder(root->getRightChild());
             cout << root->getData() << " ";
         }
-
+        
         /**
         * Algorithm:
         * 1. Checks if the current node is null; if so, returns (base case)
@@ -133,7 +134,7 @@ class BST{
         * - In pre-order traversal, the root is always the first node visited
         * 
         */
-        void traversePreOrder(Node* root) const {
+        void traversePreOrder(BSTNode* root) const {
             if(root == nullptr)
             {
                 return;
@@ -145,7 +146,7 @@ class BST{
         }
 
     public:
-        BST(): root(nullptr), size(0){}
+        BST(): root(nullptr), numNodes(0){}
 
         ~BST(){
             delete root;
@@ -153,7 +154,7 @@ class BST{
 
         void insert(const int& data){
             root = insertHelp(root, data);
-            size++;
+            numNodes++;
         }
 
         void printInOrder() const {
