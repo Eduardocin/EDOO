@@ -74,12 +74,6 @@ class BST{
         }
 
         /**
-        * Algorithm:
-        * 1. Checks if the current node is null; if so, returns (base case)
-        * 2. Recursively visits the left subtree
-        * 3. Visits (prints) the current node
-        * 4. Recursively visits the right subtree
-        * 
         * Characteristics:
         * - Visits nodes in ascending order in a BST
         * - Useful for getting elements in sorted order
@@ -97,12 +91,6 @@ class BST{
         }
 
         /**
-        * Algorithm:
-        * 1. Checks if the current node is null; if so, returns (base case)
-        * 2. Recursively visits the left subtree
-        * 3. Recursively visits the right subtree
-        * 4. Visits (prints) the current node
-        * 
         * Characteristics:
         * - Visits children before the parent node
         * - Useful for cleanup or deletion operations (parent nodes are 
@@ -122,12 +110,6 @@ class BST{
         }
         
         /**
-        * Algorithm:
-        * 1. Checks if the current node is null; if so, returns (base case)
-        * 2. Visits (prints) the current node
-        * 3. Recursively visits the left subtree
-        * 4. Recursively visits the right subtree
-        * 
         * Characteristics:
         * - Visits the parent node before its children
         * - Useful for creating a copy of the tree or for serialization
