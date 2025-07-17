@@ -11,20 +11,7 @@ Este repositório contém implementações completas de estruturas de dados e al
 ```
 EDOO/
 ├── APS/                    # Atividades Práticas Supervisionadas
-│   ├── AP1/               # Introdução à POO
-│   ├── AP2/               # Fundamentos de C++
-│   ├── AP3/               # Classes e Objetos
-│   ├── AP4/               # Encapsulamento
-│   ├── AP5/               # Sobrecarga de Operadores
-│   ├── AP6/               # Ponteiros e Referências
-│   ├── AP7/               # Herança
-│   ├── Ap9/               # Listas Ligadas
-│   ├── AP10/              # Pilhas e Filas
-│   ├── AP11/              # Tabelas Hash
-│   └── AP12/              # Árvores Binárias de Busca
 ├── DataStructs/           # Implementações de Estruturas de Dados
-│   ├── BST/               # Binary Search Tree
-│   └── HashTable/         # Tabela Hash
 ├── EP/                    # Exercícios Programa
 ├── HackerRank/            # Soluções do HackerRank
 ├── Iudexx/               # Problemas do Judge Iudexx
