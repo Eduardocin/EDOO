@@ -52,12 +52,12 @@ public:
             return -1;
         }
 
-        int val = top->getData();
         Node* temp = top;
+        int val = top->getData();
         top = top->getNext();
 
-        delete temp;
         size--;
+        delete temp;
         return val;
     }
 

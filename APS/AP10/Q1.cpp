@@ -20,11 +20,6 @@ class Node{
         Node* getNext() const {
             return next;
         }
-
-        // Setters
-        void setData(const int data){
-            this->data = data;
-        }
         
         void setNext(Node* next){
             this->next = next;
@@ -38,12 +33,9 @@ class Stack {
         int size;
 
     public:
-        Stack()
-        {
-            top = nullptr;
-            size = 0;
-        }
+        Stack() : top(nullptr), size(0) {}
 
+        
         ~Stack(){
             while(top != nullptr)
             {

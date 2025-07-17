@@ -1,2 +1,44 @@
 # Ignorar todos os diretórios .cph em qualquer lugar do repositório
 .cph/
+
+# Executáveis
+*.exe
+*.out
+*.app
+
+# Arquivos de objeto
+*.o
+*.obj
+
+# Arquivos de biblioteca
+*.lib
+*.a
+*.so
+*.dylib
+
+# Arquivos de depuração
+*.dSYM/
+*.pdb
+*.ilk
+
+# Arquivos temporários
+*.tmp
+*.temp
+*~
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de IDE
+.vscode/settings.json
+.vscode/c_cpp_properties.json
+*.swp
+*.swo
+
+# Arquivos de compilação
+*.d
+*.depend
+*.layout
+*.cbp

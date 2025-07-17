@@ -1,35 +1,122 @@
-# Object-Oriented Data Structures in C++  
+# EDOO - Estruturas de Dados Orientadas a Objetos 🚀
 
-This repository contains implementations of common data structures in C++, developed with a focus on object-oriented programming.  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![C++](https://img.shields.io/badge/C%2B%2B-17%2B-blue.svg)](https://isocpp.org/)
+[![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 
-## Implemented Data Structures  
+Este repositório contém implementações completas de estruturas de dados e algoritmos em C++, desenvolvidas com foco em programação orientada a objetos durante o curso de Ciência da Computação.
 
-- Array Based List
-- Singly Linked List  
-- Stack  
-- Queue  
-- Hash Table  
+## 📁 Estrutura do Repositório
 
-## Features  
+```
+EDOO/
+├── APS/                    # Atividades Práticas Supervisionadas
+│   ├── AP1/               # Introdução à POO
+│   ├── AP2/               # Fundamentos de C++
+│   ├── AP3/               # Classes e Objetos
+│   ├── AP4/               # Encapsulamento
+│   ├── AP5/               # Sobrecarga de Operadores
+│   ├── AP6/               # Ponteiros e Referências
+│   ├── AP7/               # Herança
+│   ├── Ap9/               # Listas Ligadas
+│   ├── AP10/              # Pilhas e Filas
+│   ├── AP11/              # Tabelas Hash
+│   └── AP12/              # Árvores Binárias de Busca
+├── DataStructs/           # Implementações de Estruturas de Dados
+│   ├── BST/               # Binary Search Tree
+│   └── HashTable/         # Tabela Hash
+├── EP/                    # Exercícios Programa
+├── HackerRank/            # Soluções do HackerRank
+├── Iudexx/               # Problemas do Judge Iudexx
+└── Vdjuge/               # Problemas do VD Judge
+```
 
-- Modular and reusable implementations  
-- Use of classes and objects for data abstraction  
-- Encapsulation of functionalities  
-- Methods for insertion, removal, and search of elements  
-- Basic exception handling  
+## 🛠️ Estruturas de Dados Implementadas
 
-## Projects  
+### Estruturas Básicas
+- **Array Based List** - Lista baseada em array com redimensionamento dinâmico
+- **Singly Linked List** - Lista ligada simples com operações básicas
+- **Stack** - Pilha (LIFO) com implementação eficiente
+- **Queue** - Fila (FIFO) com operações otimizadas
 
-### Parsing Tree Implementation  
+### Estruturas Avançadas
+- **Hash Table** - Tabela hash com tratamento de colisões
+- **Binary Search Tree (BST)** - Árvore binária de busca balanceada
 
-This project includes an implementation of a parsing tree (or parse tree), which is a hierarchical structure used to represent the syntactic structure of a language or expression. The parsing tree is essential for various applications such as:  
+## ✨ Características Principais
 
-- **Syntax Analysis**: Used in compilers and interpreters to analyze the source code structure.  
-- **Expression Evaluation**: Parsing mathematical or logical expressions.  
-- **XML/JSON Processing**: Parsing structured data formats.  
+- **Programação Orientada a Objetos**: Uso extensivo de classes, herança e polimorfismo
+- **Modularidade**: Implementações reutilizáveis e bem estruturadas
+- **Encapsulamento**: Proteção de dados e interface bem definida
+- **Tratamento de Exceções**: Gerenciamento básico de erros
+- **Documentação**: Código bem comentado e exemplos práticos
+- **Compatibilidade**: Compilação com GCC/G++ no Windows
 
-#### Key Features of the Parsing Tree Implementation  
+## 🎯 Objetivos Educacionais
 
-- **Node Structure**: Each node represents a token or symbol in the input.  
-- **Tree Construction**: Methods to build the tree from a given input stream.  
-- **Validation**: Basic validation of the input structure.  
+Este repositório serve como:
+- Material de estudo para estruturas de dados
+- Referência para implementações em C++
+- Exemplo de boas práticas de programação
+- Base para projetos acadêmicos
+
+## 🚀 Como Usar
+
+### Pré-requisitos
+- Compilador C++ (GCC 7.0+ ou equivalente)
+- VS Code com extensões C++
+- Git para controle de versão
+
+### Compilação
+```bash
+# Para compilar um arquivo específico
+g++ -std=c++17 -o programa arquivo.cpp
+
+# Para compilar com debug
+g++ -g -std=c++17 -o programa arquivo.cpp
+```
+
+### Execução
+```bash
+# Windows
+programa.exe
+
+# Linux/Mac
+./programa
+```
+
+## 📚 Conteúdo por Categoria
+
+### APS (Atividades Práticas)
+- **AP1-AP7**: Fundamentos de POO em C++
+- **AP9**: Implementação de listas ligadas
+- **AP10**: Pilhas e filas com aplicações práticas
+- **AP11**: Tabelas hash e funções de dispersão
+- **AP12**: Árvores binárias de busca
+
+### Problemas de Programação
+- **HackerRank**: Soluções de problemas algorítmicos
+- **Iudexx**: Implementações para competições
+- **VD Judge**: Problemas de estruturas de dados
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para:
+- Reportar bugs
+- Sugerir melhorias
+- Adicionar novos exemplos
+- Corrigir documentação
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
+
+## 👨‍💻 Autor
+
+**Eduardo** - *Estudante de Ciência da Computação*
+- GitHub: [@Eduardocin](https://github.com/Eduardocin)
+
+---
+
+⭐ Se este repositório foi útil para você, considere dar uma estrela!  
+
